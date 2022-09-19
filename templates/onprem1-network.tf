@@ -95,8 +95,8 @@ resource "azurerm_virtual_network_gateway_connection" "onprem-site-1-to-primary"
   type                            = "Vnet2Vnet"
   virtual_network_gateway_id      = azurerm_virtual_network_gateway.onprem-site-1-vpngw.id
   peer_virtual_network_gateway_id = azurerm_virtual_network_gateway.primary-vpngw.id
-
-  shared_key = var.vpngw-shared-key
+  enable_bgp                      = true
+  shared_key                      = var.vpngw-shared-key
 }
 
 resource "azurerm_virtual_network_gateway_connection" "primary-to-onprem-site-1" {
@@ -107,10 +107,10 @@ resource "azurerm_virtual_network_gateway_connection" "primary-to-onprem-site-1"
   type                            = "Vnet2Vnet"
   virtual_network_gateway_id      = azurerm_virtual_network_gateway.primary-vpngw.id
   peer_virtual_network_gateway_id = azurerm_virtual_network_gateway.onprem-site-1-vpngw.id
-
-  shared_key = var.vpngw-shared-key
+  enable_bgp                      = true
+  shared_key                      = var.vpngw-shared-key
 }
-
+ 
 resource "azurerm_virtual_network_gateway_connection" "onprem-site-1-to-secondary" {
   name                = "onprem-site-1-to-${var.secondary-location}"
   location            = azurerm_resource_group.hubandspoke-onprem1-rg.location
@@ -119,8 +119,8 @@ resource "azurerm_virtual_network_gateway_connection" "onprem-site-1-to-secondar
   type                            = "Vnet2Vnet"
   virtual_network_gateway_id      = azurerm_virtual_network_gateway.onprem-site-1-vpngw.id
   peer_virtual_network_gateway_id = azurerm_virtual_network_gateway.secondary-vpngw.id
-
-  shared_key = var.vpngw-shared-key
+  enable_bgp                      = true
+  shared_key                      = var.vpngw-shared-key
 }
 
 resource "azurerm_virtual_network_gateway_connection" "secondary-to-onprem-site-1" {
@@ -131,8 +131,8 @@ resource "azurerm_virtual_network_gateway_connection" "secondary-to-onprem-site-
   type                            = "Vnet2Vnet"
   virtual_network_gateway_id      = azurerm_virtual_network_gateway.secondary-vpngw.id
   peer_virtual_network_gateway_id = azurerm_virtual_network_gateway.onprem-site-1-vpngw.id
-
-  shared_key = var.vpngw-shared-key
+  enable_bgp                      = true
+  shared_key                      = var.vpngw-shared-key
 }
 
 
