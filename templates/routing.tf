@@ -58,10 +58,15 @@ resource "azurerm_route_table" "primary-secure-spoke-2-fe-route-table" {
     next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
   }
   route {
-    name           = "backend-via-azfw"
-    address_prefix = local.primary-spoke2-besubnet[0]
+    name           = "local-spoke-via-azfw"
+    address_prefix = local.primary-spoke2-prefix[0]
     next_hop_type  = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
+  }
+  route {
+    name           = "spoke2-fe-direct"
+    address_prefix = local.primary-spoke2-fesubnet[0]
+    next_hop_type  = "VnetLocal"
   }
 }
 
@@ -90,10 +95,15 @@ resource "azurerm_route_table" "primary-secure-spoke-2-be-route-table" {
     next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
   }
   route {
-    name           = "frontend-via-azfw"
-    address_prefix = local.primary-spoke2-fesubnet[0]
+    name           = "local-spoke-via-azfw"
+    address_prefix = local.primary-spoke2-prefix[0]
     next_hop_type  = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
+  }
+  route {
+    name           = "spoke2-be-direct"
+    address_prefix = local.primary-spoke2-besubnet[0]
+    next_hop_type  = "VnetLocal"
   }
 }
 
@@ -325,16 +335,9 @@ resource "azurerm_route_table" "primary-vm-subnet-route-table" {
     next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
   }
   route {
-    name           = "to-${var.secondary-location}-spoke1-via-azfw"
-    address_prefix = local.secondary-spoke1-prefix[0]
-    next_hop_type  = "VirtualAppliance"
-    next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
-  }
-  route {
-    name           = "to-${var.secondary-location}-spoke2-via-azfw"
-    address_prefix = local.secondary-spoke2-prefix[0]
-    next_hop_type  = "VirtualAppliance"
-    next_hop_in_ip_address = azurerm_firewall.azfw-primary.ip_configuration[0].private_ip_address
+    name           = "local-subnet-direct"
+    address_prefix = local.primary-hub-vmsubnet[0]
+    next_hop_type  = "VnetLocal"
   }
 }
 
@@ -380,22 +383,15 @@ resource "azurerm_route_table" "secondary-vm-subnet-route-table" {
     next_hop_in_ip_address = azurerm_firewall.azfw-secondary.ip_configuration[0].private_ip_address
   }
   route {
-    name                    = "to-${var.primary-location}-spoke1-via-azfw"
-    address_prefix          = local.primary-spoke1-prefix[0]
-    next_hop_type           = "VirtualAppliance"
-    next_hop_in_ip_address  = azurerm_firewall.azfw-secondary.ip_configuration[0].private_ip_address
-  }
-  route {
-    name                    = "to-${var.primary-location}-spoke2-via-azfw"
-    address_prefix          = local.primary-spoke2-prefix[0]
-    next_hop_type           = "VirtualAppliance"
-    next_hop_in_ip_address  = azurerm_firewall.azfw-secondary.ip_configuration[0].private_ip_address
-  }
-  route {
     name           = "to-${var.primary-location}-hub-via-azfw"
     address_prefix = local.primary-hub-prefix[0]
     next_hop_type  = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.azfw-secondary.ip_configuration[0].private_ip_address
+  }
+  route {
+    name           = "local-subnet-direct"
+    address_prefix = local.secondary-hub-vmsubnet[0]
+    next_hop_type  = "VnetLocal"
   }
 }
 
