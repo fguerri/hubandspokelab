@@ -7,7 +7,7 @@ resource "azurerm_route_table" "primary-spoke-route-table" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
 
   route {
     name           = "default-via-azfw"
@@ -43,7 +43,7 @@ resource "azurerm_route_table" "primary-secure-spoke-2-fe-route-table" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
 
   route {
     name           = "default-via-azfw"
@@ -80,7 +80,7 @@ resource "azurerm_route_table" "primary-secure-spoke-2-be-route-table" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
 
   route {
     name           = "default-via-azfw"
@@ -122,7 +122,7 @@ resource "azurerm_route_table" "secondary-spoke-route-table" {
   location            = azurerm_resource_group.hubandspoke-secondary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-secondary-rg.name
 
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
 
   route {
     name           = "default-via-azfw"
@@ -168,7 +168,7 @@ resource "azurerm_route_table" "primary-azfw-route-table" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  disable_bgp_route_propagation = false
+  bgp_route_propagation_enabled = true
 
   route {
     name           = "to-${var.secondary-location}-via-azfw"
@@ -198,7 +198,7 @@ resource "azurerm_route_table" "secondary-azfw-route-table" {
   location            = azurerm_resource_group.hubandspoke-secondary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-secondary-rg.name
 
-  disable_bgp_route_propagation = false
+  bgp_route_propagation_enabled = true
 
   route {
     name           = "to-${var.primary-location}-via-azfw"
@@ -228,7 +228,7 @@ resource "azurerm_route_table" "primary-gateway-subnet-route-table" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  disable_bgp_route_propagation = false
+  bgp_route_propagation_enabled = true
 
   route {
     name           = "to-${var.primary-location}-spoke1-via-azfw"
@@ -265,7 +265,7 @@ resource "azurerm_route_table" "secondary-gateway-subnet-route-table" {
   location            = azurerm_resource_group.hubandspoke-secondary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-secondary-rg.name
 
-  disable_bgp_route_propagation = false
+  bgp_route_propagation_enabled = true
 
   route {
     name                    = "to-${var.secondary-location}-spoke1-via-azfw"
@@ -302,7 +302,7 @@ resource "azurerm_route_table" "primary-vm-subnet-route-table" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
 
   route {
     name           = "default-via-azfw"
@@ -356,7 +356,7 @@ resource "azurerm_route_table" "secondary-vm-subnet-route-table" {
   location            = azurerm_resource_group.hubandspoke-secondary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-secondary-rg.name
 
-  disable_bgp_route_propagation = true
+  bgp_route_propagation_enabled = false
 
   route {
     name           = "default-via-azfw"
