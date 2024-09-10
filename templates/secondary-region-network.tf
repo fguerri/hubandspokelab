@@ -224,14 +224,14 @@ resource "azurerm_virtual_network_gateway" "secondary-vpngw" {
   ip_configuration {
     name                          = "ipconfig1"
     public_ip_address_id          = azurerm_public_ip.secondary-vpngw-pip-1.id
-    private_ip_address_allocation = "Static"
+    private_ip_address_allocation = "Dynamic"
     subnet_id                     = azurerm_subnet.secondary-hub-gatewaysubnet.id
   }
 
   ip_configuration {
     name                          = "ipconfig2"
     public_ip_address_id          = azurerm_public_ip.secondary-vpngw-pip-2.id
-    private_ip_address_allocation = "Static"
+    private_ip_address_allocation = "Dynamic"
     subnet_id                     = azurerm_subnet.secondary-hub-gatewaysubnet.id
   }
 
