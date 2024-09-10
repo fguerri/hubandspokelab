@@ -198,7 +198,7 @@ resource "azurerm_public_ip" "primary-vpngw-pip-1" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  allocation_method = "Dynamic"
+  allocation_method = "Static"
 }
 
 resource "azurerm_public_ip" "primary-vpngw-pip-2" {
@@ -206,7 +206,7 @@ resource "azurerm_public_ip" "primary-vpngw-pip-2" {
   location            = azurerm_resource_group.hubandspoke-primary-rg.location
   resource_group_name = azurerm_resource_group.hubandspoke-primary-rg.name
 
-  allocation_method = "Dynamic"
+  allocation_method = "Static"
 }
 
 resource "azurerm_virtual_network_gateway" "primary-vpngw" {
